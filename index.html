@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PD Cognitive Impairment Risk Calculator</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --primary-light: #2980b9;
+            --accent: #e74c3c;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --border: #dee2e6;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .disclaimer {
+            background: #fef9e7;
+            border-left: 4px solid var(--warning);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .section-body {
+            padding: 1rem 1.2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .form-group .hint {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-bottom: 0.2rem;
+        }
+
+        .form-group input, .form-group select {
+            padding: 0.5rem 0.6rem;
+            border: 1.5px solid var(--border);
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+            background: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(41,128,185,0.1);
+        }
+
+        .calculate-btn {
+            display: block;
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 1.5rem 0;
+            transition: transform 0.1s, box-shadow 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26,82,118,0.3);
+        }
+
+        .calculate-btn:active { transform: translateY(0); }
+
+        /* Results */
+        .results { display: none; }
+        .results.visible { display: block; }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .risk-display {
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        .risk-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .risk-value {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .risk-category {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .risk-low { background: #d5f5e3; color: #1e8449; }
+        .risk-intermediate { background: #fdebd0; color: #b7950b; }
+        .risk-high { background: #fadbd8; color: #c0392b; }
+
+        .risk-timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-item {
+            text-align: center;
+            padding: 0.8rem;
+            background: var(--bg);
+            border-radius: 6px;
+        }
+
+        .timeline-item .year {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .timeline-item .prob {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Bar chart */
+        .bar-chart {
+            margin-top: 1.2rem;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .bar-label {
+            width: 80px;
+            font-size: 0.75rem;
+            text-align: right;
+            padding-right: 0.6rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 24px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+
+        .bar-value {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .bar-value-outside {
+            margin-left: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text);
+            min-width: 40px;
+        }
+
+        /* Contribution chart */
+        .contrib-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.35rem;
+        }
+
+        .contrib-label {
+            width: 160px;
+            font-size: 0.72rem;
+            text-align: right;
+            padding-right: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .contrib-track {
+            flex: 1;
+            height: 18px;
+            background: #ecf0f1;
+            border-radius: 3px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .contrib-fill {
+            height: 100%;
+            border-radius: 3px;
+            position: absolute;
+            top: 0;
+        }
+
+        .contrib-fill-pos { background: #e74c3c; }
+        .contrib-fill-neg { background: #27ae60; }
+
+        .contrib-val {
+            font-size: 0.68rem;
+            font-weight: 600;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .model-info {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 1rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .footer a { color: var(--primary-light); text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Parkinson's Disease Cognitive Impairment Risk Calculator</h1>
+    <p>Based on Cox Proportional Hazards Model from the PPMI Cohort (N = 1,152)</p>
+</div>
+
+<div class="container">
+    <div class="disclaimer">
+        <strong>Research Tool Only.</strong> This calculator is for research and educational purposes. It is not a substitute for clinical judgment. Predictions are derived from the PPMI cohort and may not generalize to all populations. Model C-index = 0.73; time-dependent AUC = 0.82–0.92.
+    </div>
+
+    <!-- Demographics -->
+    <div class="section">
+        <div class="section-header">Demographics</div>
+        <div class="section-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Age (years)</label>
+                    <input type="number" id="age" min="30" max="95" value="65" step="1">
+                </div>
+                <div class="form-group">
+                    <label>Sex</label>
+                    <select id="sex">
+                        <option value="1">Male</option>
+                        <option value="0">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Education (years)</label>
+                    <input type="number" id="educyrs" min="0" max="30" value="16" step="1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Genetics -->
+    <div class="section">
+        <div class="section-header">Genetics</div>
+        <div class="section-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>GBA Mutation Carrier</label>
+                    <select id="gba">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>LRRK2 Mutation Carrier</label>
+                    <select id="lrrk2">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cognitive Tests -->
+    <div class="section">
+        <div class="section-header">Cognitive Assessments</div>
+        <div class="section-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Symbol Digit Modalities Test</label>
+                    <div class="hint">Total correct (0–110)</div>
+                    <input type="number" id="sdmt" min="0" max="110" value="40" step="1">
+                </div>
+                <div class="form-group">
+                    <label>HVLT-R Total Learning</label>
+                    <div class="hint">Sum of Trials 1–3 (0–36)</div>
+                    <input type="number" id="hvlt" min="0" max="36" value="25" step="1">
+                </div>
+                <div class="form-group">
+                    <label>Letter-Number Sequencing</label>
+                    <div class="hint">Total raw (0–21)</div>
+                    <input type="number" id="lns" min="0" max="21" value="11" step="1">
+                </div>
+                <div class="form-group">
+                    <label>Semantic Fluency (Animals)</label>
+                    <div class="hint">Total words in 60 seconds</div>
+                    <input type="number" id="fluency" min="0" max="100" value="45" step="1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Motor & NMS -->
+    <div class="section">
+        <div class="section-header">Motor & Non-Motor Symptoms</div>
+        <div class="section-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>MDS-UPDRS Part II Total</label>
+                    <div class="hint">Motor ADL (0–52)</div>
+                    <input type="number" id="updrs2" min="0" max="52" value="5" step="1">
+                </div>
+                <div class="form-group">
+                    <label>MDS-UPDRS Part I Total</label>
+                    <div class="hint">Non-motor (0–52)</div>
+                    <input type="number" id="updrs1" min="0" max="52" value="1" step="1">
+                </div>
+                <div class="form-group">
+                    <label>Cognitive Complaints (UPDRS 1.1)</label>
+                    <select id="np1cog">
+                        <option value="0">0 – Normal</option>
+                        <option value="1">1 – Slight</option>
+                        <option value="2">2 – Mild</option>
+                        <option value="3">3 – Moderate</option>
+                        <option value="4">4 – Severe</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Hallucinations (UPDRS 1.2)</label>
+                    <select id="np1hall">
+                        <option value="0">0 – Normal</option>
+                        <option value="1">1 – Slight</option>
+                        <option value="2">2 – Mild</option>
+                        <option value="3">3 – Moderate</option>
+                        <option value="4">4 – Severe</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Apathy (UPDRS 1.5)</label>
+                    <select id="np1apat">
+                        <option value="0">0 – Normal</option>
+                        <option value="1">1 – Slight</option>
+                        <option value="2">2 – Mild</option>
+                        <option value="3">3 – Moderate</option>
+                        <option value="4">4 – Severe</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>PIGD-Dominant Subtype</label>
+                    <select id="pigd">
+                        <option value="0">No (Tremor-dominant or Mixed)</option>
+                        <option value="1">Yes (PIGD-dominant)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Autonomic / Sleep / Function -->
+    <div class="section">
+        <div class="section-header">Autonomic, Sleep & Function</div>
+        <div class="section-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>SCOPA-AUT Total</label>
+                    <div class="hint">Autonomic symptoms (0–69)</div>
+                    <input type="number" id="scopa" min="0" max="69" value="9" step="1">
+                </div>
+                <div class="form-group">
+                    <label>RBD Screening Questionnaire</label>
+                    <div class="hint">Total score (0–13)</div>
+                    <input type="number" id="rbd" min="0" max="13" value="3" step="1">
+                </div>
+                <div class="form-group">
+                    <label>Modified Schwab-England ADL</label>
+                    <div class="hint">% independence (0–100)</div>
+                    <input type="number" id="adl" min="0" max="100" value="90" step="5">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="calculate-btn" onclick="calculate()">Calculate Risk</button>
+
+    <!-- Results -->
+    <div class="results" id="results">
+        <div class="result-card">
+            <div class="risk-display">
+                <div class="risk-label">Estimated 5-Year Risk of Cognitive Impairment</div>
+                <div class="risk-value" id="risk5yr">—</div>
+                <div><span class="risk-category" id="riskCat">—</span></div>
+            </div>
+
+            <div class="risk-timeline">
+                <div class="timeline-item">
+                    <div class="year">3-Year Risk</div>
+                    <div class="prob" id="risk3yr">—</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">5-Year Risk</div>
+                    <div class="prob" id="risk5yr2">—</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">8-Year Risk</div>
+                    <div class="prob" id="risk8yr">—</div>
+                </div>
+            </div>
+
+            <div class="bar-chart" id="timeChart"></div>
+        </div>
+
+        <div class="result-card">
+            <h3 style="font-size:0.9rem; margin-bottom:0.8rem; color:var(--primary);">Individual Risk Factor Contributions</h3>
+            <div id="contribChart"></div>
+        </div>
+
+        <div class="model-info">
+            <strong>Model Details:</strong> Cox proportional hazards with LASSO variable selection.
+            Developed from PPMI cohort (N = 1,152; 441 events). Apparent C-index = 0.734; optimism-corrected = 0.709; mean time-dependent AUC = 0.866.
+            <br><strong>Reference:</strong> Negida A. Development and Validation of a Clinical Nomogram for Predicting Cognitive Impairment in Parkinson's Disease. 2026.
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Data from the Parkinson's Progression Markers Initiative (PPMI) &mdash; <a href="https://www.ppmi-info.org" target="_blank">www.ppmi-info.org</a></p>
+    <p>&copy; 2026 Ahmed Negida, MD, PhD &mdash; Virginia Commonwealth University</p>
+</div>
+
+<script>
+// Cox model coefficients
+const COEFS = {
+    AGE_AT_VISIT: 0.046092,
+    SDMTOTAL: -0.019270,
+    NP1COG: 0.405306,
+    GBA_carrier: 0.631754,
+    SCAU_TOTAL: 0.021974,
+    RBDSQ_TOTAL: 0.058896,
+    MSEADLG: -0.017562,
+    HVLT_total_learning: -0.019365,
+    DVT_SFTANIM: -0.009507,
+    LRRK2_carrier: -0.347810,
+    EDUCYRS: 0.034292,
+    NP2PTOT: 0.004437,
+    NP1RTOT: 0.015416,
+    NP1HALL: 0.453796,
+    LNS_TOTRAW: -0.034424,
+    SEX: 0.135923,
+    NP1APAT: 0.086526,
+    PIGD_dominant: 0.191771
+};
+
+// Baseline survival at key timepoints (from fitted model)
+const S0 = {
+    1: 0.934283,
+    2: 0.917654,
+    3: 0.862283,
+    5: 0.737126,
+    8: 0.525402,
+    10: 0.333651
+};
+
+// Median values (reference population)
+const MEDIANS = {
+    AGE_AT_VISIT: 63.3,
+    SDMTOTAL: 43,
+    NP1COG: 0,
+    GBA_carrier: 0,
+    SCAU_TOTAL: 9,
+    RBDSQ_TOTAL: 2,
+    MSEADLG: 95,
+    HVLT_total_learning: 25,
+    DVT_SFTANIM: 51,
+    LRRK2_carrier: 0,
+    EDUCYRS: 16,
+    NP2PTOT: 5,
+    NP1RTOT: 1,
+    NP1HALL: 0,
+    LNS_TOTRAW: 11,
+    SEX: 1,
+    NP1APAT: 0,
+    PIGD_dominant: 0
+};
+
+const LABELS = {
+    AGE_AT_VISIT: 'Age',
+    SDMTOTAL: 'Symbol Digit Mod.',
+    NP1COG: 'Cognitive complaints',
+    GBA_carrier: 'GBA mutation',
+    SCAU_TOTAL: 'SCOPA-AUT',
+    RBDSQ_TOTAL: 'RBD score',
+    MSEADLG: 'Schwab-England ADL',
+    HVLT_total_learning: 'HVLT-R learning',
+    DVT_SFTANIM: 'Semantic fluency',
+    LRRK2_carrier: 'LRRK2 mutation',
+    EDUCYRS: 'Education',
+    NP2PTOT: 'UPDRS Part II',
+    NP1RTOT: 'UPDRS Part I',
+    NP1HALL: 'Hallucinations',
+    LNS_TOTRAW: 'Letter-Number Seq.',
+    SEX: 'Sex (male)',
+    NP1APAT: 'Apathy',
+    PIGD_dominant: 'PIGD dominant'
+};
+
+function getInputValues() {
+    return {
+        AGE_AT_VISIT: parseFloat(document.getElementById('age').value),
+        SEX: parseFloat(document.getElementById('sex').value),
+        EDUCYRS: parseFloat(document.getElementById('educyrs').value),
+        GBA_carrier: parseFloat(document.getElementById('gba').value),
+        LRRK2_carrier: parseFloat(document.getElementById('lrrk2').value),
+        SDMTOTAL: parseFloat(document.getElementById('sdmt').value),
+        HVLT_total_learning: parseFloat(document.getElementById('hvlt').value),
+        LNS_TOTRAW: parseFloat(document.getElementById('lns').value),
+        DVT_SFTANIM: parseFloat(document.getElementById('fluency').value),
+        NP2PTOT: parseFloat(document.getElementById('updrs2').value),
+        NP1RTOT: parseFloat(document.getElementById('updrs1').value),
+        NP1COG: parseFloat(document.getElementById('np1cog').value),
+        NP1HALL: parseFloat(document.getElementById('np1hall').value),
+        NP1APAT: parseFloat(document.getElementById('np1apat').value),
+        PIGD_dominant: parseFloat(document.getElementById('pigd').value),
+        SCAU_TOTAL: parseFloat(document.getElementById('scopa').value),
+        RBDSQ_TOTAL: parseFloat(document.getElementById('rbd').value),
+        MSEADLG: parseFloat(document.getElementById('adl').value)
+    };
+}
+
+function calculate() {
+    const vals = getInputValues();
+
+    // Linear predictor: sum(coef * value)
+    let lp = 0;
+    for (const key in COEFS) {
+        lp += COEFS[key] * vals[key];
+    }
+
+    // LP at median (for centering)
+    let lp_median = 0;
+    for (const key in COEFS) {
+        lp_median += COEFS[key] * MEDIANS[key];
+    }
+
+    // Relative hazard = exp(LP - LP_median)
+    const relHazard = Math.exp(lp - lp_median);
+
+    // Predicted survival: S(t) = S0(t)^exp(LP - LP_median)
+    const risks = {};
+    for (const t in S0) {
+        const surv = Math.pow(S0[t], relHazard);
+        risks[t] = Math.max(0, Math.min(1, 1 - surv));
+    }
+
+    // Display 5-year risk prominently
+    const risk5 = risks[5];
+    const risk5pct = (risk5 * 100).toFixed(1) + '%';
+    document.getElementById('risk5yr').textContent = risk5pct;
+    document.getElementById('risk5yr').style.color =
+        risk5 < 0.2 ? '#27ae60' : risk5 < 0.5 ? '#f39c12' : '#e74c3c';
+
+    // Risk category
+    const catEl = document.getElementById('riskCat');
+    if (risk5 < 0.2) {
+        catEl.textContent = 'LOW RISK';
+        catEl.className = 'risk-category risk-low';
+    } else if (risk5 < 0.5) {
+        catEl.textContent = 'INTERMEDIATE RISK';
+        catEl.className = 'risk-category risk-intermediate';
+    } else {
+        catEl.textContent = 'HIGH RISK';
+        catEl.className = 'risk-category risk-high';
+    }
+
+    // Timeline
+    document.getElementById('risk3yr').textContent = (risks[3] * 100).toFixed(1) + '%';
+    document.getElementById('risk5yr2').textContent = risk5pct;
+    document.getElementById('risk8yr').textContent = (risks[8] * 100).toFixed(1) + '%';
+
+    // Bar chart over time
+    const timeChart = document.getElementById('timeChart');
+    timeChart.innerHTML = '';
+    const timepoints = [1, 2, 3, 5, 8, 10];
+    for (const t of timepoints) {
+        const r = risks[t];
+        const pct = (r * 100).toFixed(1);
+        const width = Math.max(2, r * 100);
+        const color = r < 0.2 ? '#27ae60' : r < 0.5 ? '#f39c12' : '#e74c3c';
+
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+            <div class="bar-label">${t}-year</div>
+            <div class="bar-track">
+                <div class="bar-fill" style="width:${width}%; background:${color};">
+                    ${width > 12 ? `<span class="bar-value">${pct}%</span>` : ''}
+                </div>
+            </div>
+            ${width <= 12 ? `<span class="bar-value-outside">${pct}%</span>` : ''}
+        `;
+        timeChart.appendChild(row);
+    }
+
+    // Contribution chart
+    const contribChart = document.getElementById('contribChart');
+    contribChart.innerHTML = '';
+
+    const contributions = [];
+    for (const key in COEFS) {
+        const contrib = COEFS[key] * (vals[key] - MEDIANS[key]);
+        contributions.push({ key, contrib, label: LABELS[key] });
+    }
+    contributions.sort((a, b) => Math.abs(b.contrib) - Math.abs(a.contrib));
+
+    const maxContrib = Math.max(...contributions.map(c => Math.abs(c.contrib)), 0.01);
+    const midPoint = 50; // percent of track width
+
+    for (const c of contributions) {
+        if (Math.abs(c.contrib) < 0.001) continue;
+        const pct = (c.contrib / maxContrib) * 45;
+        const isPos = c.contrib > 0;
+
+        const row = document.createElement('div');
+        row.className = 'contrib-bar';
+
+        const left = isPos ? midPoint : midPoint + pct;
+        const width = Math.abs(pct);
+        const cssClass = isPos ? 'contrib-fill-pos' : 'contrib-fill-neg';
+        const sign = c.contrib > 0 ? '+' : '';
+        const valPos = isPos ? `left:${width + 2}%` : `right:${width + 2}%`;
+
+        row.innerHTML = `
+            <div class="contrib-label" title="${c.label}">${c.label}</div>
+            <div class="contrib-track">
+                <div style="position:absolute;left:${midPoint}%;top:0;bottom:0;width:1px;background:#bdc3c7;"></div>
+                <div class="contrib-fill ${cssClass}" style="left:${Math.min(left, midPoint)}%;width:${width}%;"></div>
+                <span class="contrib-val" style="${valPos}">${sign}${c.contrib.toFixed(3)}</span>
+            </div>
+        `;
+        contribChart.appendChild(row);
+    }
+
+    // Show results
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Calculate on Enter key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') calculate();
+});
+</script>
+
+</body>
+</html>
