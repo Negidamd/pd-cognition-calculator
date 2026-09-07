@@ -30,6 +30,7 @@ every revision analysis is additive.
 | `R04_supp_tables_figures.py` | Supplementary tables and figures |
 | `R12_nongenetic_nomogram.py` | Companion 16-predictor model and nomogram without GBA/LRRK2, for settings without genotyping |
 | `R14_update_calculator.py` | Derives the web calculator constants; corrects the baseline-survival centring and adds the non-genetic model |
+| `R19_forest_plot_gba1.py` | Regenerates the Figure 2 forest plot with GBA1 nomenclature on a logarithmic hazard-ratio axis |
 | `R16_audit_figures.py` | Bootstrap pointwise confidence band for the time-dependent AUC, numbers-at-risk annotation for the Kaplan-Meier figure, GBA1 dose-response figure on a log hazard-ratio axis |
 
 ## Data
