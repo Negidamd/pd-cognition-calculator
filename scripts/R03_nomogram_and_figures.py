@@ -56,7 +56,7 @@ def risk_to_total(r,t):
     return (lp-offset)*scale
 
 name_map={'AGE_AT_VISIT':'Age (years)','SEX':'Sex (1=Male)','EDUCYRS':'Education (years)',
- 'GBA_carrier':'GBA carrier','LRRK2_carrier':'LRRK2 carrier','NP2PTOT':'MDS-UPDRS II',
+ 'GBA_carrier':'GBA1 carrier','LRRK2_carrier':'LRRK2 carrier','NP2PTOT':'MDS-UPDRS II',
  'NP1RTOT':'MDS-UPDRS I','HVLT_total_learning':'HVLT-R total learning','LNS_TOTRAW':'Letter-Number Seq.',
  'SDMTOTAL':'Symbol Digit Modalities','DVT_SFTANIM':'Semantic fluency (animals)',
  'NP1COG':'Cognitive complaints (1.1)','NP1HALL':'Hallucinations (1.2)','NP1APAT':'Apathy (1.5)',
