@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "scope": "Research estimates at the first observed normal-cognition assessment in Parkinson disease",
+  "n": 1188,
+  "events": 457,
+  "horizons": [
+    3,
+    5,
+    8
+  ],
+  "source_data_sha256": "1ec6923c2ed996690b2f312fad8eb03e556acbfadbe6a451c638d35b6c9f5034",
+  "models": {
+    "full": {
+      "label": "Full model",
+      "coefficient": {
+        "AGE_AT_VISIT": 0.04860034181910899,
+        "SEX": 0.1328777235983251,
+        "EDUCYRS": 0.02878905273321043,
+        "GBA_carrier": 0.7194210815699452,
+        "NP2PTOT": 0.025265061675468586,
+        "MCATOT": -0.013379864923826321,
+        "HVLT_total_learning": -0.008247356288485979,
+        "LNS_TOTRAW": -0.05037655074643651,
+        "SDMTOTAL": -0.01953879119670903,
+        "DVT_SFTANIM": -0.015135616756576747,
+        "NP1COG": 0.5139462526715617,
+        "RBDSQ_TOTAL": 0.0360091894800711,
+        "SCAU_TOTAL": 0.018800303462064842,
+        "MSEADLG": -0.014304995843417986
+      },
+      "training_mean": {
+        "AGE_AT_VISIT": 62.4689253647587,
+        "SEX": 0.6094276094276094,
+        "EDUCYRS": 16.088383838383837,
+        "GBA_carrier": 0.08164983164983165,
+        "NP2PTOT": 6.679292929292929,
+        "MCATOT": 26.891414141414142,
+        "HVLT_total_learning": 24.535353535353536,
+        "LNS_TOTRAW": 10.662457912457912,
+        "SDMTOTAL": 42.30639730639731,
+        "DVT_SFTANIM": 51.65909090909091,
+        "NP1COG": 0.26430976430976433,
+        "RBDSQ_TOTAL": 3.9957912457912457,
+        "SCAU_TOTAL": 10.627946127946128,
+        "MSEADLG": 92.75252525252525
+      },
+      "baseline_survival": {
+        "3": 0.8297144797543048,
+        "5": 0.6885784091796291,
+        "8": 0.5238917757925933
+      },
+      "predictor_count": 14
+    },
+    "non_genetic": {
+      "label": "Model without genetic predictors",
+      "coefficient": {
+        "AGE_AT_VISIT": 0.04675792798655296,
+        "EDUCYRS": 0.033825241285058184,
+        "NP3TOT_analysis": 0.0012277311084148688,
+        "NHY_analysis": 0.0739415773247483,
+        "NP2PTOT": 0.022223287760907002,
+        "MCATOT": -0.018840239722535918,
+        "HVLT_total_learning": -0.008428741396938777,
+        "LNS_TOTRAW": -0.03993632250610038,
+        "SDMTOTAL": -0.020488687308872204,
+        "DVT_SFTANIM": -0.014204059828214394,
+        "NP1COG": 0.5118271435526521,
+        "RBDSQ_TOTAL": 0.04849215484853474,
+        "SCAU_TOTAL": 0.017901134491939995,
+        "MSEADLG": -0.014187567021693295
+      },
+      "training_mean": {
+        "AGE_AT_VISIT": 62.4689253647587,
+        "EDUCYRS": 16.088383838383837,
+        "NP3TOT_analysis": 22.761784511784512,
+        "NHY_analysis": 1.7264309764309764,
+        "NP2PTOT": 6.679292929292929,
+        "MCATOT": 26.891414141414142,
+        "HVLT_total_learning": 24.535353535353536,
+        "LNS_TOTRAW": 10.662457912457912,
+        "SDMTOTAL": 42.30639730639731,
+        "DVT_SFTANIM": 51.65909090909091,
+        "NP1COG": 0.26430976430976433,
+        "RBDSQ_TOTAL": 3.9957912457912457,
+        "SCAU_TOTAL": 10.627946127946128,
+        "MSEADLG": 92.75252525252525
+      },
+      "baseline_survival": {
+        "3": 0.8250267991814187,
+        "5": 0.6779336423004154,
+        "8": 0.5140282486012011
+      },
+      "predictor_count": 14
+    }
+  },
+  "fields": {
+    "AGE_AT_VISIT": {
+      "label": "Age (years)",
+      "help": "Age at the index normal-cognition assessment, in years.",
+      "group": "Demographics",
+      "minimum": 29.75,
+      "maximum": 85.17,
+      "integer": false,
+      "choices": null,
+      "step": "any",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "SEX": {
+      "label": "Male sex",
+      "help": "Sex coded in the study dataset.",
+      "group": "Demographics",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "integer": true,
+      "choices": [
+        {
+          "value": 0,
+          "label": "Female"
+        },
+        {
+          "value": 1,
+          "label": "Male"
+        }
+      ],
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "EDUCYRS": {
+      "label": "Education (years)",
+      "help": "Completed years of education.",
+      "group": "Demographics",
+      "minimum": 0.0,
+      "maximum": 30.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "GBA_carrier": {
+      "label": "GBA1 carrier",
+      "help": "Use the confirmed GBA1 carrier result; an unavailable result is not negative.",
+      "group": "Genetic results",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "integer": true,
+      "choices": [
+        {
+          "value": 0,
+          "label": "Confirmed noncarrier"
+        },
+        {
+          "value": 1,
+          "label": "Confirmed carrier"
+        }
+      ],
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "NP2PTOT": {
+      "label": "MDS-UPDRS II total",
+      "help": "MDS-UPDRS II total at index.",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 40.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "MCATOT": {
+      "label": "Montreal Cognitive Assessment",
+      "help": "PPMI Montreal Cognitive Assessment total (MCATOT) at index.",
+      "group": "Cognitive assessments",
+      "minimum": 16.0,
+      "maximum": 30.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "HVLT_total_learning": {
+      "label": "HVLT-R total learning",
+      "help": "Sum of all three HVLT-R learning trials. A partial two-trial sum is not a total.",
+      "group": "Cognitive assessments",
+      "minimum": 8.0,
+      "maximum": 36.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "LNS_TOTRAW": {
+      "label": "Letter-Number Sequencing",
+      "help": "Letter-Number Sequencing total raw score.",
+      "group": "Cognitive assessments",
+      "minimum": 2.0,
+      "maximum": 21.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "SDMTOTAL": {
+      "label": "Symbol Digit Modalities",
+      "help": "Symbol Digit Modalities Test total correct.",
+      "group": "Cognitive assessments",
+      "minimum": 7.0,
+      "maximum": 75.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "DVT_SFTANIM": {
+      "label": "Animal-fluency T score",
+      "help": "PPMI animal-fluency T score (DVT_SFTANIM), as defined by the harmonized dictionary. This is not a raw animal count; no raw-to-T-score conversion is provided.",
+      "group": "Cognitive assessments",
+      "minimum": 8.0,
+      "maximum": 83.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "NP1COG": {
+      "label": "Cognitive complaints",
+      "help": "MDS-UPDRS cognitive-impairment item 1.1, scored 0 to 4.",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 3.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "RBDSQ_TOTAL": {
+      "label": "RBD questionnaire",
+      "help": "Complete REM Sleep Behavior Disorder Screening Questionnaire total, including its neurological-disease item.",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 13.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "SCAU_TOTAL": {
+      "label": "SCOPA-AUT total",
+      "help": "Complete SCOPA-AUT total: 21 common and two sex-specific items. Do not use a partial sum or count not-applicable responses as zero.",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 39.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "MSEADLG": {
+      "label": "Schwab-England ADL",
+      "help": "Schwab-England activities-of-daily-living score, as a percentage. Select the recorded score; choices reflect observed development values.",
+      "group": "Clinical assessments",
+      "minimum": 40.0,
+      "maximum": 100.0,
+      "integer": true,
+      "choices": [
+        {
+          "value": 40.0,
+          "label": "40%"
+        },
+        {
+          "value": 50.0,
+          "label": "50%"
+        },
+        {
+          "value": 60.0,
+          "label": "60%"
+        },
+        {
+          "value": 65.0,
+          "label": "65%"
+        },
+        {
+          "value": 70.0,
+          "label": "70%"
+        },
+        {
+          "value": 75.0,
+          "label": "75%"
+        },
+        {
+          "value": 80.0,
+          "label": "80%"
+        },
+        {
+          "value": 85.0,
+          "label": "85%"
+        },
+        {
+          "value": 90.0,
+          "label": "90%"
+        },
+        {
+          "value": 95.0,
+          "label": "95%"
+        },
+        {
+          "value": 100.0,
+          "label": "100%"
+        }
+      ],
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "NP3TOT_analysis": {
+      "label": "MDS-UPDRS III total",
+      "help": "Complete MDS-UPDRS III sum from one OFF-medication or untreated examination at index.",
+      "group": "Clinical assessments",
+      "minimum": 2.0,
+      "maximum": 71.0,
+      "integer": true,
+      "choices": null,
+      "step": "1",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    },
+    "NHY_analysis": {
+      "label": "Hoehn-Yahr stage",
+      "help": "Hoehn-Yahr stage from the same OFF-medication or untreated examination.",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 4.0,
+      "integer": false,
+      "choices": [
+        {
+          "value": 0.0,
+          "label": "0"
+        },
+        {
+          "value": 1.0,
+          "label": "1"
+        },
+        {
+          "value": 2.0,
+          "label": "2"
+        },
+        {
+          "value": 3.0,
+          "label": "3"
+        },
+        {
+          "value": 4.0,
+          "label": "4"
+        }
+      ],
+      "step": "any",
+      "range_basis": "Observed development cohort range; continuous bounds rounded outward to 0.01"
+    }
+  },
+  "clinical_assessment_window": "Index month or the preceding three months, inclusive; demographics, education, and germline status follow their study-specific definitions.",
+  "external_validation": false,
+  "range_policy": "Known values within the development ranges are required; no silent input imputation."
+}
