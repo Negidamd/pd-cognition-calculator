@@ -1,0 +1,266 @@
+{
+  "schema_version": 2,
+  "model_version": "R1 (September 2026)",
+  "scope": "Research estimates of cognitive impairment (MCI or dementia) risk from the first normal cognitive assessment in Parkinson disease",
+  "n": 1188,
+  "events": 457,
+  "horizons": [
+    3,
+    5,
+    8
+  ],
+  "source_data_sha256": "1ec6923c2ed996690b2f312fad8eb03e556acbfadbe6a451c638d35b6c9f5034",
+  "performance": "Internal validation: optimism-corrected C-index 0.733; nested cross-validated C-index 0.736; held-out time-dependent AUC 0.75, 0.78, and 0.81 at 3, 5, and 8 years. External validation has not been performed.",
+  "citation": "Negida A. A Multimodal Nomogram Predicting 5-Year Risk of Cognitive Impairment in Parkinson Disease. Manuscript under review (Movement Disorders Clinical Practice).",
+  "clinical_assessment_window": "Clinical scores from the month of the first normal cognitive assessment or the preceding three months.",
+  "external_validation": false,
+  "models": {
+    "full": {
+      "label": "14-predictor model",
+      "coefficient": {
+        "AGE_AT_VISIT": 0.04860034181910899,
+        "SEX": 0.1328777235983251,
+        "EDUCYRS": 0.02878905273321043,
+        "GBA_carrier": 0.7194210815699452,
+        "NP2PTOT": 0.025265061675468586,
+        "MCATOT": -0.013379864923826321,
+        "HVLT_total_learning": -0.008247356288485979,
+        "LNS_TOTRAW": -0.05037655074643651,
+        "SDMTOTAL": -0.01953879119670903,
+        "DVT_SFTANIM": -0.015135616756576747,
+        "NP1COG": 0.5139462526715617,
+        "RBDSQ_TOTAL": 0.0360091894800711,
+        "SCAU_TOTAL": 0.018800303462064842,
+        "MSEADLG": -0.014304995843417986
+      },
+      "training_mean": {
+        "AGE_AT_VISIT": 62.4689253647587,
+        "SEX": 0.6094276094276094,
+        "EDUCYRS": 16.088383838383837,
+        "GBA_carrier": 0.08164983164983165,
+        "NP2PTOT": 6.679292929292929,
+        "MCATOT": 26.891414141414142,
+        "HVLT_total_learning": 24.535353535353536,
+        "LNS_TOTRAW": 10.662457912457912,
+        "SDMTOTAL": 42.30639730639731,
+        "DVT_SFTANIM": 51.65909090909091,
+        "NP1COG": 0.26430976430976433,
+        "RBDSQ_TOTAL": 3.9957912457912457,
+        "SCAU_TOTAL": 10.627946127946128,
+        "MSEADLG": 92.75252525252525
+      },
+      "baseline_survival": {
+        "3": 0.8297144797543048,
+        "5": 0.6885784091796291,
+        "8": 0.5238917757925933
+      },
+      "predictor_count": 14
+    }
+  },
+  "fields": {
+    "AGE_AT_VISIT": {
+      "label": "Age (years)",
+      "help": "Age at the first normal cognitive assessment, in years.",
+      "group": "Demographics",
+      "minimum": 29.75,
+      "maximum": 85.17,
+      "integer": false,
+      "choices": null,
+      "step": "any"
+    },
+    "SEX": {
+      "label": "Male sex",
+      "help": "Sex as recorded.",
+      "group": "Demographics",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "integer": true,
+      "choices": [
+        {
+          "value": 0,
+          "label": "Female"
+        },
+        {
+          "value": 1,
+          "label": "Male"
+        }
+      ],
+      "step": "1"
+    },
+    "EDUCYRS": {
+      "label": "Education (years)",
+      "help": "Completed years of education.",
+      "group": "Demographics",
+      "minimum": 0.0,
+      "maximum": 30.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "GBA_carrier": {
+      "label": "GBA carrier",
+      "help": "Confirmed GBA carrier result. An unavailable result is not a negative result.",
+      "group": "Genetic result",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "integer": true,
+      "choices": [
+        {
+          "value": 0,
+          "label": "Confirmed noncarrier"
+        },
+        {
+          "value": 1,
+          "label": "Confirmed carrier"
+        }
+      ],
+      "step": "1"
+    },
+    "NP2PTOT": {
+      "label": "MDS-UPDRS II total",
+      "help": "MDS-UPDRS Part II total (motor experiences of daily living).",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 40.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "MCATOT": {
+      "label": "Montreal Cognitive Assessment",
+      "help": "Montreal Cognitive Assessment total score.",
+      "group": "Cognitive assessments",
+      "minimum": 16.0,
+      "maximum": 30.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "HVLT_total_learning": {
+      "label": "HVLT-R total learning",
+      "help": "HVLT-R total learning: sum of all three learning trials.",
+      "group": "Cognitive assessments",
+      "minimum": 8.0,
+      "maximum": 36.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "LNS_TOTRAW": {
+      "label": "Letter-Number Sequencing",
+      "help": "Letter-Number Sequencing total raw score.",
+      "group": "Cognitive assessments",
+      "minimum": 2.0,
+      "maximum": 21.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "SDMTOTAL": {
+      "label": "Symbol Digit Modalities",
+      "help": "Symbol Digit Modalities Test total correct.",
+      "group": "Cognitive assessments",
+      "minimum": 7.0,
+      "maximum": 75.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "DVT_SFTANIM": {
+      "label": "Animal-fluency T score",
+      "help": "Semantic (animal) fluency T score as derived in PPMI. This is not the raw number of animals.",
+      "group": "Cognitive assessments",
+      "minimum": 8.0,
+      "maximum": 83.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "NP1COG": {
+      "label": "Cognitive complaints",
+      "help": "MDS-UPDRS item 1.1 (cognitive impairment), scored 0 to 4.",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 3.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "RBDSQ_TOTAL": {
+      "label": "RBD questionnaire",
+      "help": "Complete REM Sleep Behavior Disorder Screening Questionnaire total.",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 13.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "SCAU_TOTAL": {
+      "label": "SCOPA-AUT total",
+      "help": "Complete SCOPA-AUT total (all sex-appropriate items).",
+      "group": "Clinical assessments",
+      "minimum": 0.0,
+      "maximum": 39.0,
+      "integer": true,
+      "choices": null,
+      "step": "1"
+    },
+    "MSEADLG": {
+      "label": "Schwab-England ADL",
+      "help": "Modified Schwab-England activities of daily living score (%).",
+      "group": "Clinical assessments",
+      "minimum": 40.0,
+      "maximum": 100.0,
+      "integer": true,
+      "choices": [
+        {
+          "value": 40.0,
+          "label": "40%"
+        },
+        {
+          "value": 50.0,
+          "label": "50%"
+        },
+        {
+          "value": 60.0,
+          "label": "60%"
+        },
+        {
+          "value": 65.0,
+          "label": "65%"
+        },
+        {
+          "value": 70.0,
+          "label": "70%"
+        },
+        {
+          "value": 75.0,
+          "label": "75%"
+        },
+        {
+          "value": 80.0,
+          "label": "80%"
+        },
+        {
+          "value": 85.0,
+          "label": "85%"
+        },
+        {
+          "value": 90.0,
+          "label": "90%"
+        },
+        {
+          "value": 95.0,
+          "label": "95%"
+        },
+        {
+          "value": 100.0,
+          "label": "100%"
+        }
+      ],
+      "step": "1"
+    }
+  },
+  "formula": "risk(t|x) = 1 - S0(t) ** exp(sum(beta_j * (x_j - mean_j))), S0 = Breslow baseline survival at the training means"
+}

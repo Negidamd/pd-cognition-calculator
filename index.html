@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>PPMI cognitive impairment research calculator</title>
+<style>
+:root{--ink:#233344;--blue:#215e85;--teal:#16867c;--line:#d4dfe6;--pale:#edf3f7}
+*{box-sizing:border-box}body{margin:0;background:#f7f9fb;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:1.45}button,input,select{font:inherit}header{background:var(--blue);color:white;padding:32px 20px}header>div,main{max-width:1040px;margin:auto}h1{font-size:32px;line-height:1.15;margin:0 0 12px}h2{font-size:23px;margin:0 0 16px}p{margin:0 0 14px}main{padding:24px 20px 40px}.note{background:var(--pale);border-left:4px solid var(--blue);padding:16px 20px;margin-bottom:24px}.panel{background:white;border:1px solid var(--line);border-radius:8px;padding:24px;margin-bottom:20px}.mode{display:flex;gap:24px;flex-wrap:wrap}.mode label{display:flex;gap:8px;align-items:center}.mode input{width:18px;height:18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px}.field label{font-weight:bold;display:block}.hint{font-size:16px;color:#536472;margin:5px 0 9px}.range{font-size:15px;color:#536472;margin-top:5px}input[type=number],select{width:100%;min-height:44px;padding:9px 12px;border:1px solid #acbcc9;border-radius:5px;background:white;color:var(--ink)}input:focus,select:focus,button:focus{outline:3px solid #9dc9e4;outline-offset:2px}button{background:var(--blue);color:white;border:0;border-radius:5px;padding:13px 24px;cursor:pointer;font-weight:bold}.error{color:#8b2424;background:#fff0ed;border:1px solid #c86b5c;padding:14px 18px;margin:0 0 18px}.risks{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.risk{padding:20px;background:var(--pale);border-radius:7px;text-align:center}.risk strong{display:block;font-size:36px;color:var(--blue);margin-top:5px}.risk small{font-size:17px}.result-model{font-weight:bold;color:var(--blue);margin-bottom:12px}footer{font-size:16px;color:#536472;border-top:1px solid var(--line);padding-top:20px;margin-top:26px}[hidden]{display:none!important}@media(max-width:620px){h1{font-size:28px}header{padding:26px 18px}main{padding:20px 14px}.panel{padding:20px 16px}.fields{grid-template-columns:1fr}.risks{gap:9px}.risk{padding:15px 5px}.risk strong{font-size:29px}.risk small{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div><h1>Parkinson disease cognitive impairment research calculator</h1><p>Estimates from a documented normal-cognition assessment in the PPMI cohort.</p></div></header>
+<main>
+<div class="note"><p><strong>Research use.</strong> This model has internal validation; external validation has not been performed. Estimates describe the study outcome of recorded cognitive impairment and should not determine an individual patient's treatment.</p><p>Use the specified clinical scores from the index month or the preceding three months. Do not enter later or older clinical measurements. Demographics, education and genotype follow the definitions shown below.</p><p style="margin:0">Entries stay in this browser and are not transmitted or saved.</p></div>
+<input type="hidden" name="model" value="full">
+<form id="calculator" novalidate>
+<div id="inputSections"></div>
+<div id="errors" class="error" role="alert" aria-live="polite" hidden></div>
+<button type="submit">Calculate research estimate</button>
+</form>
+<section id="results" class="panel" aria-live="polite" style="margin-top:24px" hidden><h2>Estimated absolute risk</h2><div id="resultModel" class="result-model"></div><div class="risks" id="riskCards"></div><p class="hint" style="margin-top:18px;margin-bottom:0">Time is measured from the index normal-cognition assessment. These are model probabilities, without individual prediction intervals.</p></section>
+<footer><p id="cohortSummary"></p><p>Continuous inputs are limited to the observed development ranges (rounded outward for display). The calculator requires known scores and does not silently replace missing entries. Model development used imputation within training folds.</p><p id="citation"></p></footer>
+</main>
+<script>
+'use strict';
+const MODEL_PARAMETERS={"schema_version":2,"model_version":"R1 (September 2026)","scope":"Research estimates of cognitive impairment (MCI or dementia) risk from the first normal cognitive assessment in Parkinson disease","n":1188,"events":457,"horizons":[3,5,8],"source_data_sha256":"1ec6923c2ed996690b2f312fad8eb03e556acbfadbe6a451c638d35b6c9f5034","performance":"Internal validation: optimism-corrected C-index 0.733; nested cross-validated C-index 0.736; held-out time-dependent AUC 0.75, 0.78, and 0.81 at 3, 5, and 8 years. External validation has not been performed.","citation":"Negida A. A Multimodal Nomogram Predicting 5-Year Risk of Cognitive Impairment in Parkinson Disease. Manuscript under review (Movement Disorders Clinical Practice).","clinical_assessment_window":"Clinical scores from the month of the first normal cognitive assessment or the preceding three months.","external_validation":false,"models":{"full":{"label":"14-predictor model","coefficient":{"AGE_AT_VISIT":0.04860034181910899,"SEX":0.1328777235983251,"EDUCYRS":0.02878905273321043,"GBA_carrier":0.7194210815699452,"NP2PTOT":0.025265061675468586,"MCATOT":-0.013379864923826321,"HVLT_total_learning":-0.008247356288485979,"LNS_TOTRAW":-0.05037655074643651,"SDMTOTAL":-0.01953879119670903,"DVT_SFTANIM":-0.015135616756576747,"NP1COG":0.5139462526715617,"RBDSQ_TOTAL":0.0360091894800711,"SCAU_TOTAL":0.018800303462064842,"MSEADLG":-0.014304995843417986},"training_mean":{"AGE_AT_VISIT":62.4689253647587,"SEX":0.6094276094276094,"EDUCYRS":16.088383838383837,"GBA_carrier":0.08164983164983165,"NP2PTOT":6.679292929292929,"MCATOT":26.891414141414142,"HVLT_total_learning":24.535353535353536,"LNS_TOTRAW":10.662457912457912,"SDMTOTAL":42.30639730639731,"DVT_SFTANIM":51.65909090909091,"NP1COG":0.26430976430976433,"RBDSQ_TOTAL":3.9957912457912457,"SCAU_TOTAL":10.627946127946128,"MSEADLG":92.75252525252525},"baseline_survival":{"3":0.8297144797543048,"5":0.6885784091796291,"8":0.5238917757925933},"predictor_count":14}},"fields":{"AGE_AT_VISIT":{"label":"Age (years)","help":"Age at the first normal cognitive assessment, in years.","group":"Demographics","minimum":29.75,"maximum":85.17,"integer":false,"choices":null,"step":"any"},"SEX":{"label":"Male sex","help":"Sex as recorded.","group":"Demographics","minimum":0.0,"maximum":1.0,"integer":true,"choices":[{"value":0,"label":"Female"},{"value":1,"label":"Male"}],"step":"1"},"EDUCYRS":{"label":"Education (years)","help":"Completed years of education.","group":"Demographics","minimum":0.0,"maximum":30.0,"integer":true,"choices":null,"step":"1"},"GBA_carrier":{"label":"GBA carrier","help":"Confirmed GBA carrier result. An unavailable result is not a negative result.","group":"Genetic result","minimum":0.0,"maximum":1.0,"integer":true,"choices":[{"value":0,"label":"Confirmed noncarrier"},{"value":1,"label":"Confirmed carrier"}],"step":"1"},"NP2PTOT":{"label":"MDS-UPDRS II total","help":"MDS-UPDRS Part II total (motor experiences of daily living).","group":"Clinical assessments","minimum":0.0,"maximum":40.0,"integer":true,"choices":null,"step":"1"},"MCATOT":{"label":"Montreal Cognitive Assessment","help":"Montreal Cognitive Assessment total score.","group":"Cognitive assessments","minimum":16.0,"maximum":30.0,"integer":true,"choices":null,"step":"1"},"HVLT_total_learning":{"label":"HVLT-R total learning","help":"HVLT-R total learning: sum of all three learning trials.","group":"Cognitive assessments","minimum":8.0,"maximum":36.0,"integer":true,"choices":null,"step":"1"},"LNS_TOTRAW":{"label":"Letter-Number Sequencing","help":"Letter-Number Sequencing total raw score.","group":"Cognitive assessments","minimum":2.0,"maximum":21.0,"integer":true,"choices":null,"step":"1"},"SDMTOTAL":{"label":"Symbol Digit Modalities","help":"Symbol Digit Modalities Test total correct.","group":"Cognitive assessments","minimum":7.0,"maximum":75.0,"integer":true,"choices":null,"step":"1"},"DVT_SFTANIM":{"label":"Animal-fluency T score","help":"Semantic (animal) fluency T score as derived in PPMI. This is not the raw number of animals.","group":"Cognitive assessments","minimum":8.0,"maximum":83.0,"integer":true,"choices":null,"step":"1"},"NP1COG":{"label":"Cognitive complaints","help":"MDS-UPDRS item 1.1 (cognitive impairment), scored 0 to 4.","group":"Clinical assessments","minimum":0.0,"maximum":3.0,"integer":true,"choices":null,"step":"1"},"RBDSQ_TOTAL":{"label":"RBD questionnaire","help":"Complete REM Sleep Behavior Disorder Screening Questionnaire total.","group":"Clinical assessments","minimum":0.0,"maximum":13.0,"integer":true,"choices":null,"step":"1"},"SCAU_TOTAL":{"label":"SCOPA-AUT total","help":"Complete SCOPA-AUT total (all sex-appropriate items).","group":"Clinical assessments","minimum":0.0,"maximum":39.0,"integer":true,"choices":null,"step":"1"},"MSEADLG":{"label":"Schwab-England ADL","help":"Modified Schwab-England activities of daily living score (%).","group":"Clinical assessments","minimum":40.0,"maximum":100.0,"integer":true,"choices":[{"value":40.0,"label":"40%"},{"value":50.0,"label":"50%"},{"value":60.0,"label":"60%"},{"value":65.0,"label":"65%"},{"value":70.0,"label":"70%"},{"value":75.0,"label":"75%"},{"value":80.0,"label":"80%"},{"value":85.0,"label":"85%"},{"value":90.0,"label":"90%"},{"value":95.0,"label":"95%"},{"value":100.0,"label":"100%"}],"step":"1"}},"formula":"risk(t|x) = 1 - S0(t) ** exp(sum(beta_j * (x_j - mean_j))), S0 = Breslow baseline survival at the training means"};
+function computeRisk(values,modelKey){
+ const model=MODEL_PARAMETERS.models[modelKey];if(!model)throw new Error('Unknown model');let lp=0;
+ for(const [key,beta]of Object.entries(model.coefficient)){
+  const value=values[key];if(!Number.isFinite(value))throw new Error('Missing or nonfinite predictor: '+key);
+  lp+=beta*(value-model.training_mean[key]);
+ }
+ const risk={};for(const h of MODEL_PARAMETERS.horizons){const survival=model.baseline_survival[String(h)];risk[h]=-Math.expm1(Math.exp(lp)*Math.log(survival));if(!Number.isFinite(risk[h])||risk[h]<0||risk[h]>1)throw new Error('Invalid model probability');}
+ return risk;
+}
+function validateValues(values,modelKey){
+ const issues=[];for(const key of Object.keys(MODEL_PARAMETERS.models[modelKey].coefficient)){
+  const f=MODEL_PARAMETERS.fields[key],v=values[key];
+  if(!Number.isFinite(v))issues.push(f.label+': enter a known value.');
+  else if(v<f.minimum||v>f.maximum||(f.integer&&!Number.isInteger(v)))issues.push(f.label+': enter '+(f.integer?'an integer':'a value')+' from '+f.minimum+' to '+f.maximum+'.');
+  else if(f.choices&&!f.choices.some(c=>c.value===v))issues.push(f.label+': choose a listed result.');
+ }return issues;
+}
+function activeKey(){return 'full';}
+function hideResults(){document.getElementById('results').hidden=true;}
+function applyModel(){
+ const selected=new Set(Object.keys(MODEL_PARAMETERS.models[activeKey()].coefficient));
+ document.querySelectorAll('.field').forEach(node=>{const keep=selected.has(node.dataset.key);node.hidden=!keep;node.querySelector('input,select').disabled=!keep;});
+ document.querySelectorAll('.input-group').forEach(node=>{node.hidden=![...node.querySelectorAll('.field')].some(field=>!field.hidden);});
+ document.getElementById('errors').hidden=true;hideResults();
+}
+function initialize(){
+ const root=document.getElementById('inputSections');
+ for(const group of ['Demographics','Genetic result','Cognitive assessments','Clinical assessments']){
+  const entries=Object.entries(MODEL_PARAMETERS.fields).filter(([key,f])=>f.group===group);if(!entries.length)continue;
+  const section=document.createElement('section');section.className='panel input-group';const heading=document.createElement('h2');heading.textContent=group;section.appendChild(heading);const grid=document.createElement('div');grid.className='fields';section.appendChild(grid);
+  for(const [key,f]of entries){
+   const item=document.createElement('div');item.className='field';item.dataset.key=key;const label=document.createElement('label');label.htmlFor=key;label.textContent=f.label;item.appendChild(label);const hint=document.createElement('div');hint.id=key+'_hint';hint.className='hint';hint.textContent=f.help;item.appendChild(hint);
+   let input;if(f.choices){input=document.createElement('select');const blank=document.createElement('option');blank.value='';blank.textContent='Select known result';input.appendChild(blank);for(const choice of f.choices){const option=document.createElement('option');option.value=choice.value;option.textContent=choice.label;input.appendChild(option);}}
+   else{input=document.createElement('input');input.type='number';input.min=f.minimum;input.max=f.maximum;input.step=f.step;input.inputMode='decimal';}
+   input.id=key;input.name=key;input.required=true;input.setAttribute('aria-describedby',hint.id);item.appendChild(input);
+   if(!f.choices){const range=document.createElement('div');range.className='range';range.textContent='Development range: '+f.minimum+' to '+f.maximum;item.appendChild(range);}grid.appendChild(item);
+  }root.appendChild(section);
+ }
+ document.getElementById('cohortSummary').textContent='Developed in '+MODEL_PARAMETERS.n.toLocaleString()+' PPMI participants with '+MODEL_PARAMETERS.events.toLocaleString()+' incident cognitive impairment events; '+MODEL_PARAMETERS.models.full.predictor_count+' predictors. '+MODEL_PARAMETERS.performance;document.getElementById('citation').textContent=MODEL_PARAMETERS.citation;
+ 
+ document.getElementById('calculator').addEventListener('input',hideResults);
+ document.getElementById('calculator').addEventListener('submit',event=>{
+  event.preventDefault();const key=activeKey(),values={};for(const name of Object.keys(MODEL_PARAMETERS.models[key].coefficient)){const text=document.getElementById(name).value.trim();values[name]=text===''?NaN:Number(text);}
+  const issues=validateValues(values,key),box=document.getElementById('errors');box.hidden=issues.length===0;box.textContent=issues.join(' ');
+  if(issues.length){hideResults();box.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  const risks=computeRisk(values,key),cards=document.getElementById('riskCards');cards.replaceChildren();
+  for(const horizon of MODEL_PARAMETERS.horizons){const card=document.createElement('div');card.className='risk';const title=document.createElement('small');title.textContent=horizon+'-year risk';const value=document.createElement('strong');value.id='risk'+horizon;value.textContent=(100*risks[horizon]).toFixed(1)+'%';card.append(title,value);cards.appendChild(card);}
+  document.getElementById('resultModel').textContent=MODEL_PARAMETERS.models[key].label;document.getElementById('results').hidden=false;document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+ });applyModel();
+}
+if(typeof document!=='undefined')initialize();
+</script>
+</body></html>
