@@ -59,22 +59,22 @@
   },
   "fields": {
     "AGE_AT_VISIT": {
-      "label": "Age (years)",
-      "help": "Age at the first normal cognitive assessment, in years.",
-      "group": "Demographics",
-      "minimum": 29.75,
-      "maximum": 85.17,
-      "integer": false,
-      "choices": null,
-      "step": "any"
+      "group": "About the patient",
+      "label": "Age",
+      "help": "Age at the normal cognitive assessment.",
+      "widget": "range",
+      "unit_format": "{v} years",
+      "minimum": 30,
+      "maximum": 85,
+      "step": 1,
+      "default": 64,
+      "integer": true
     },
     "SEX": {
-      "label": "Male sex",
-      "help": "Sex as recorded.",
-      "group": "Demographics",
-      "minimum": 0.0,
-      "maximum": 1.0,
-      "integer": true,
+      "group": "About the patient",
+      "label": "Sex",
+      "help": "",
+      "widget": "buttons",
       "choices": [
         {
           "value": 0,
@@ -85,181 +85,231 @@
           "label": "Male"
         }
       ],
-      "step": "1"
+      "minimum": 0,
+      "maximum": 1,
+      "default": 1,
+      "integer": true
     },
     "EDUCYRS": {
-      "label": "Education (years)",
+      "group": "About the patient",
+      "label": "Education",
       "help": "Completed years of education.",
-      "group": "Demographics",
-      "minimum": 0.0,
-      "maximum": 30.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
+      "widget": "range",
+      "unit_format": "{v} years",
+      "minimum": 0,
+      "maximum": 30,
+      "step": 1,
+      "default": 16,
+      "integer": true
     },
     "GBA_carrier": {
-      "label": "GBA carrier",
-      "help": "Confirmed GBA carrier result. An unavailable result is not a negative result.",
-      "group": "Genetic result",
-      "minimum": 0.0,
-      "maximum": 1.0,
-      "integer": true,
+      "group": "Genetics",
+      "label": "GBA variant",
+      "help": "Confirmed genetic result. If GBA status is unknown, this model should not be used.",
+      "widget": "buttons",
       "choices": [
         {
           "value": 0,
-          "label": "Confirmed noncarrier"
+          "label": "Non-carrier"
         },
         {
           "value": 1,
-          "label": "Confirmed carrier"
+          "label": "Carrier"
         }
       ],
-      "step": "1"
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0,
+      "integer": true
     },
     "NP2PTOT": {
-      "label": "MDS-UPDRS II total",
-      "help": "MDS-UPDRS Part II total (motor experiences of daily living).",
-      "group": "Clinical assessments",
-      "minimum": 0.0,
-      "maximum": 40.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
+      "group": "Symptoms and daily function",
+      "label": "Motor experiences of daily living (MDS-UPDRS Part II)",
+      "help": "Part II total (0–52); higher means more difficulty.",
+      "widget": "range",
+      "unit_format": "{v}",
+      "minimum": 0,
+      "maximum": 40,
+      "step": 1,
+      "default": 6,
+      "integer": true
     },
     "MCATOT": {
-      "label": "Montreal Cognitive Assessment",
-      "help": "Montreal Cognitive Assessment total score.",
-      "group": "Cognitive assessments",
-      "minimum": 16.0,
-      "maximum": 30.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
+      "group": "Cognitive tests",
+      "label": "MoCA",
+      "help": "Montreal Cognitive Assessment total (0–30).",
+      "widget": "range",
+      "unit_format": "{v} / 30",
+      "minimum": 16,
+      "maximum": 30,
+      "step": 1,
+      "default": 27,
+      "integer": true
     },
     "HVLT_total_learning": {
+      "group": "Cognitive tests",
       "label": "HVLT-R total learning",
-      "help": "HVLT-R total learning: sum of all three learning trials.",
-      "group": "Cognitive assessments",
-      "minimum": 8.0,
-      "maximum": 36.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
+      "help": "Words recalled across the three learning trials (0–36).",
+      "widget": "range",
+      "unit_format": "{v} / 36",
+      "minimum": 8,
+      "maximum": 36,
+      "step": 1,
+      "default": 25,
+      "integer": true
     },
     "LNS_TOTRAW": {
+      "group": "Cognitive tests",
       "label": "Letter-Number Sequencing",
-      "help": "Letter-Number Sequencing total raw score.",
-      "group": "Cognitive assessments",
-      "minimum": 2.0,
-      "maximum": 21.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
+      "help": "Total raw score (0–21).",
+      "widget": "range",
+      "unit_format": "{v} / 21",
+      "minimum": 2,
+      "maximum": 21,
+      "step": 1,
+      "default": 11,
+      "integer": true
     },
     "SDMTOTAL": {
-      "label": "Symbol Digit Modalities",
-      "help": "Symbol Digit Modalities Test total correct.",
-      "group": "Cognitive assessments",
-      "minimum": 7.0,
-      "maximum": 75.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
+      "group": "Cognitive tests",
+      "label": "Symbol Digit Modalities Test",
+      "help": "Number of correct responses.",
+      "widget": "range",
+      "unit_format": "{v} correct",
+      "minimum": 7,
+      "maximum": 75,
+      "step": 1,
+      "default": 42,
+      "integer": true
     },
     "DVT_SFTANIM": {
-      "label": "Animal-fluency T score",
-      "help": "Semantic (animal) fluency T score as derived in PPMI. This is not the raw number of animals.",
-      "group": "Cognitive assessments",
-      "minimum": 8.0,
-      "maximum": 83.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
+      "group": "Cognitive tests",
+      "label": "Semantic (animal) fluency",
+      "help": "Age- and education-adjusted T score as derived in PPMI (population mean 50, SD 10), not the raw count.",
+      "widget": "range",
+      "unit_format": "T = {v}",
+      "minimum": 8,
+      "maximum": 83,
+      "step": 1,
+      "default": 51,
+      "integer": true
     },
     "NP1COG": {
-      "label": "Cognitive complaints",
-      "help": "MDS-UPDRS item 1.1 (cognitive impairment), scored 0 to 4.",
-      "group": "Clinical assessments",
-      "minimum": 0.0,
-      "maximum": 3.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
-    },
-    "RBDSQ_TOTAL": {
-      "label": "RBD questionnaire",
-      "help": "Complete REM Sleep Behavior Disorder Screening Questionnaire total.",
-      "group": "Clinical assessments",
-      "minimum": 0.0,
-      "maximum": 13.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
-    },
-    "SCAU_TOTAL": {
-      "label": "SCOPA-AUT total",
-      "help": "Complete SCOPA-AUT total (all sex-appropriate items).",
-      "group": "Clinical assessments",
-      "minimum": 0.0,
-      "maximum": 39.0,
-      "integer": true,
-      "choices": null,
-      "step": "1"
-    },
-    "MSEADLG": {
-      "label": "Schwab-England ADL",
-      "help": "Modified Schwab-England activities of daily living score (%).",
-      "group": "Clinical assessments",
-      "minimum": 40.0,
-      "maximum": 100.0,
-      "integer": true,
+      "group": "Symptoms and daily function",
+      "label": "Cognitive complaints (MDS-UPDRS 1.1)",
+      "help": "Patient- or caregiver-reported problems with memory or thinking.",
+      "widget": "buttons",
       "choices": [
         {
-          "value": 40.0,
-          "label": "40%"
+          "value": 0,
+          "label": "Normal",
+          "note": "0"
         },
         {
-          "value": 50.0,
-          "label": "50%"
+          "value": 1,
+          "label": "Slight",
+          "note": "1"
         },
         {
-          "value": 60.0,
-          "label": "60%"
+          "value": 2,
+          "label": "Mild",
+          "note": "2"
         },
         {
-          "value": 65.0,
-          "label": "65%"
+          "value": 3,
+          "label": "Moderate",
+          "note": "3"
         },
         {
-          "value": 70.0,
-          "label": "70%"
-        },
+          "value": 4,
+          "label": "Severe",
+          "note": "4"
+        }
+      ],
+      "minimum": 0,
+      "maximum": 4,
+      "default": 0,
+      "integer": true
+    },
+    "RBDSQ_TOTAL": {
+      "group": "Symptoms and daily function",
+      "label": "REM sleep behavior disorder screening questionnaire",
+      "help": "Total score (0–13).",
+      "widget": "range",
+      "unit_format": "{v} / 13",
+      "minimum": 0,
+      "maximum": 13,
+      "step": 1,
+      "default": 3,
+      "integer": true
+    },
+    "SCAU_TOTAL": {
+      "group": "Symptoms and daily function",
+      "label": "Autonomic symptoms (SCOPA-AUT)",
+      "help": "Total score; higher means more autonomic symptoms.",
+      "widget": "range",
+      "unit_format": "{v}",
+      "minimum": 0,
+      "maximum": 39,
+      "step": 1,
+      "default": 10,
+      "integer": true
+    },
+    "MSEADLG": {
+      "group": "Symptoms and daily function",
+      "label": "Independence in daily activities (Schwab-England)",
+      "help": "Modified Schwab-England ADL scale.",
+      "widget": "select",
+      "choices": [
         {
-          "value": 75.0,
-          "label": "75%"
-        },
-        {
-          "value": 80.0,
-          "label": "80%"
-        },
-        {
-          "value": 85.0,
-          "label": "85%"
-        },
-        {
-          "value": 90.0,
-          "label": "90%"
+          "value": 100.0,
+          "label": "100% – completely independent"
         },
         {
           "value": 95.0,
           "label": "95%"
         },
         {
-          "value": 100.0,
-          "label": "100%"
+          "value": 90.0,
+          "label": "90% – independent, some slowness"
+        },
+        {
+          "value": 85.0,
+          "label": "85%"
+        },
+        {
+          "value": 80.0,
+          "label": "80% – independent in most chores, twice as long"
+        },
+        {
+          "value": 75.0,
+          "label": "75%"
+        },
+        {
+          "value": 70.0,
+          "label": "70% – not completely independent"
+        },
+        {
+          "value": 65.0,
+          "label": "65%"
+        },
+        {
+          "value": 60.0,
+          "label": "60% – some dependency"
+        },
+        {
+          "value": 50.0,
+          "label": "50% – more dependent, help with half of chores"
+        },
+        {
+          "value": 40.0,
+          "label": "40% – very dependent"
         }
       ],
-      "step": "1"
+      "minimum": 40.0,
+      "maximum": 100.0,
+      "default": 95.0,
+      "integer": true
     }
   },
   "formula": "risk(t|x) = 1 - S0(t) ** exp(sum(beta_j * (x_j - mean_j))), S0 = Breslow baseline survival at the training means"
