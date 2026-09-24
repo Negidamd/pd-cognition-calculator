@@ -2,7 +2,7 @@
 
 Live page: https://negidamd.github.io/pd-cognition-calculator/
 
-This is a browser calculator for the 14-predictor Cox model described in:
+This is a browser calculator for the 14-predictor Cox model described in the manuscript below, together with its companion model without genetic predictors, which is used automatically when GBA status is unknown:
 
 > Negida A. A Multimodal Nomogram Predicting 5-Year Risk of Cognitive Impairment in Parkinson Disease. Manuscript under review, *Movement Disorders Clinical Practice*.
 
@@ -21,9 +21,12 @@ It estimates the 3-, 5- and 8-year risk of incident cognitive impairment (mild c
   - nested cross-validated C-index 0.736;
   - held-out time-dependent AUC 0.75, 0.78 and 0.81 at 3, 5 and 8 years.
 
+- **Companion model (GBA status unknown):** 14 predictors, with MDS-UPDRS Part III and Hoehn & Yahr stage in place of GBA status and sex. Optimism-corrected C-index 0.729; held-out 5-year AUC 0.77.
+- **Newly diagnosed patients:** discrimination was higher in patients who were untreated and diagnosed within 2 years (held-out C-index 0.76).
+
 ## Files
 
 - `index.html`: the calculator. It is self-contained; entries stay in your browser and are not sent anywhere.
-- `model_parameters.json`: coefficients, training means, baseline survival at 3, 5 and 8 years, and the allowed input ranges.
+- `model_parameters.json`: for both models, coefficients, training means, baseline survival at 3, 5 and 8 years, and the allowed input ranges.
 
 The repository contains no participant-level data. PPMI data are available to qualified researchers at https://www.ppmi-info.org.
