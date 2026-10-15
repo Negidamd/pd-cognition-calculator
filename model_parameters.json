@@ -11,7 +11,7 @@
   ],
   "source_data_sha256": "1ec6923c2ed996690b2f312fad8eb03e556acbfadbe6a451c638d35b6c9f5034",
   "performance": "Internal validation: optimism-corrected C-index 0.733; nested cross-validated C-index 0.736; held-out time-dependent AUC 0.75, 0.78, and 0.81 at 3, 5, and 8 years. Model without genetics: optimism-corrected C-index 0.729. Discrimination was higher in newly diagnosed, untreated patients (held-out C-index 0.76). External validation has not been performed.",
-  "citation": "Negida A. A Multimodal Nomogram Predicting 5-Year Risk of Cognitive Impairment in Parkinson Disease. Manuscript under review (Movement Disorders Clinical Practice).",
+  "citation": "Negida A. A Multimodal Nomogram Predicting the Risk of Cognitive Impairment in Parkinson Disease. Movement Disorders Clinical Practice. 2026. Accepted, pending publication. doi:10.1002/mdc3.70884",
   "clinical_assessment_window": "Clinical scores from the month of the first normal cognitive assessment or the preceding three months.",
   "external_validation": false,
   "models": {

@@ -4,7 +4,7 @@ Live page: https://negidamd.github.io/pd-cognition-calculator/
 
 This is a browser calculator for the 14-predictor Cox model described in the manuscript below, together with its companion model without genetic predictors, which is used automatically when GBA status is unknown:
 
-> Negida A. A Multimodal Nomogram Predicting 5-Year Risk of Cognitive Impairment in Parkinson Disease. Manuscript under review, *Movement Disorders Clinical Practice*.
+> Negida A. A Multimodal Nomogram Predicting the Risk of Cognitive Impairment in Parkinson Disease. *Movement Disorders Clinical Practice*. 2026. Accepted, pending publication. doi:[10.1002/mdc3.70884](https://doi.org/10.1002/mdc3.70884)
 
 It estimates the 3-, 5- and 8-year risk of incident cognitive impairment (mild cognitive impairment or dementia) from the first normal cognitive assessment.
 
