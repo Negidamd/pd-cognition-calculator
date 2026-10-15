@@ -134,7 +134,7 @@
     "EDUCYRS": {
       "group": "About the patient",
       "label": "Education",
-      "help": "Completed years of education.",
+      "help": "Completed years of education. Education alone did not predict impairment in this cohort; it adds risk only when test scores are held equal, because the same scores in a more educated person may indicate performance below their expected level.",
       "widget": "range",
       "unit_format": "{v} years",
       "minimum": 0,
