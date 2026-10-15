@@ -134,7 +134,8 @@
     "EDUCYRS": {
       "group": "About the patient",
       "label": "Education***",
-      "help": "Completed years of education. See the note below.",
+      "help": "Completed years of education.",
+      "note": "*** Note: education alone was not associated with cognitive impairment in the development cohort (HR 1.01 per year, 95% CI 0.98–1.03). In the model, risk rises with education (HR 1.03 per year) because the cognitive test scores are held equal: the same scores in a more educated person may indicate performance below their expected level. It does not mean that education increases risk.",
       "widget": "range",
       "unit_format": "{v} years",
       "minimum": 0,
